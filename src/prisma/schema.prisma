@@ -9,3 +9,57 @@ datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
+
+model User {
+  id                      String         @id @default(uuid())
+  email                   String         @unique
+  full_name               String
+  alternative_email       String?
+  phone_number            String?
+  status_id               Int
+  role_id                 Int
+  created_at              DateTime       @default(now())
+  password                Password?
+  session                 Session[]
+  status                  Status         @relation(fields: [status_id], references: [id])
+  role                    Role           @relation(fields: [role_id], references: [id])
+  @@map("users")
+}
+
+model Password {
+  id                      Int             @id @default(autoincrement())
+  user_id                 String          @unique
+  hash                    String
+  created_at              DateTime        @default(now())
+  user                    User            @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("passwords")
+}
+
+model Session {
+  id                      Int              @id @default(autoincrement())
+  token                   String           @unique
+  user_id                 String
+  created_at              DateTime         @default(now())
+  user                    User             @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Status {
+  id                      Int              @id @default(autoincrement())
+  name                    String           @unique
+  users                   User[]
+
+  @@map("statuses")
+}
+
+model Role {
+  id                      Int               @id @default(autoincrement())
+  name                    String            @unique
+  //notification Notification[]
+  //permissions  PermissionInRole[]
+  user                    User[]
+
+  @@map("roles")
+}
