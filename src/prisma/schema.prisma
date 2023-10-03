@@ -19,7 +19,11 @@ model User {
   status_id               Int
   role_id                 Int
   created_at              DateTime       @default(now())
+  updated_at              DateTime?
+  deleted_at              DateTime?
+  is_active               Boolean        @default(true)
   password                Password?
+  validation              Validation?
   session                 Session[]
   status                  Status         @relation(fields: [status_id], references: [id])
   role                    Role           @relation(fields: [role_id], references: [id])
@@ -62,4 +66,14 @@ model Role {
   user                    User[]
 
   @@map("roles")
+}
+
+model Validation {
+  id                      Int               @id @default(autoincrement())
+  token                   String            @unique
+  user_id                 String            @unique
+  created_at              DateTime          @default(now())
+  user                    User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("validations")
 }

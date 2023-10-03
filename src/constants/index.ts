@@ -1,4 +1,5 @@
 export * from './user.constants';
+export * from './statusCodes.constants';
 
 export const ENVIRONMENTS = {
     LOCAL: 'local',
