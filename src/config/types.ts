@@ -12,8 +12,14 @@ type TokenConfig = {
   refresh_token_expiry: number;
 };
 
+type OTPConfig = {
+  length: number;
+  expiry: number;
+};
+
 export type Config = {
-  environment: string;
   app: AppConfig;
+  environment: string;
+  otp: OTPConfig;
   token: TokenConfig;
 };

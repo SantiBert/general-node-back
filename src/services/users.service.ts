@@ -10,6 +10,13 @@ export class UserService{
         return await this.user.findFirst({
           select: {
             email: true,
+            full_name:true,
+            phone_number:true,
+            status_id:true,
+            role_id:true,
+            created_at:true,
+            is_active:true,
+
           },
           where: {id}
         });
@@ -17,15 +24,30 @@ export class UserService{
     
     public async findByEmail(email: string): Promise<Partial<User> | null> {
         return await this.user.findUnique({
-          select: {id: true, email: true},
+          select: {
+            id: true, 
+            email: true,
+            full_name:true,
+            phone_number:true,
+            status_id:true,
+            role_id:true,
+            created_at:true,
+            is_active:true,
+          },
           where: {email}
         });
       }
       public async findCurrent(id: string): Promise<Partial<User> | null> {
         return await this.user.findUnique({
           select: {
+            id: true, 
             email: true,
-            id:true
+            full_name:true,
+            phone_number:true,
+            status_id:true,
+            role_id:true,
+            created_at:true,
+            is_active:true,
           },
           where: {id}
         });

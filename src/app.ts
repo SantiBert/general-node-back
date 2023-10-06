@@ -7,7 +7,7 @@ import errorMiddleware from '@middlewares/error.middleware';
 import {Routes} from '@interfaces/routes.interface';
 import {logger} from '@utils/logger';
 
-require('dotenv').config();
+require('dotenv').config({ path: '.env.local' });
 const BASE_PATH = config.app.base_path;
 const APP_PORT = config.app.port;
 const APP_ENV = config.environment;

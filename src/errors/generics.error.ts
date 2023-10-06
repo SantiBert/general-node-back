@@ -1,4 +1,4 @@
-import {STATUS_CODES} from '@/constants/statusCodes';
+import {STATUS_CODES} from '@/constants/statusCodes.constants';
 import {createException} from '@/exceptions/HttpException';
 
 export const INVALID_VERSION_FORMAT = 'invalid_version_format';

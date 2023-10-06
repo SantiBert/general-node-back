@@ -1,16 +1,30 @@
 import {
     IsEmail,
     IsString,
-    // isPhoneNumber,
+    Length,
     ValidateIf,
     MaxLength,
     IsHexadecimal
   } from 'class-validator';
+  import config from '@/config';
+
+  const OTP_LEN = config.otp.length;
   
   class EmailValidator {
     @IsEmail()
     public email: string;
   }
+
+  export class ResetPasswordVerifyDto extends EmailValidator {}
+  export class ResetPasswordEmailDto extends EmailValidator {}
+
+  export class ResetPasswordSMSDto extends EmailValidator {}
+  
+  export class ResendActivateAccountEmailDto extends EmailValidator {}
+  
+  export class ResendResetPasswordEmailDto extends EmailValidator {}
+  
+  export class ResendResetPasswordSMSDto extends EmailValidator {}
   
   export class SignupDto extends EmailValidator {
     @IsString()
@@ -40,5 +54,30 @@ import {
   }
   
   export class LogOutDto {}
+
+  export class ValidateOTPDto extends EmailValidator {
+    @IsString()
+    @Length(OTP_LEN, OTP_LEN)
+    public otp: string;
+  }
+
+  export class ChangePasswordEmailDto {
+    @IsString()
+    public new_password: string;
+    @IsHexadecimal()
+    @MaxLength(128)
+    public token: string;
+  }
+
+  export class CreateRefreshTokenDto {}
+  export class ChangePasswordSMSDto extends EmailValidator {
+    @IsString()
+    public new_password: string;
+    @IsString()
+    @Length(OTP_LEN, OTP_LEN)
+    public otp: string;
+  }
+
+  
   
   

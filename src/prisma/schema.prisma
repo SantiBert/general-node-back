@@ -14,7 +14,6 @@ model User {
   id                      String         @id @default(uuid())
   email                   String         @unique
   full_name               String
-  alternative_email       String?
   phone_number            String?
   status_id               Int
   role_id                 Int
@@ -24,6 +23,7 @@ model User {
   is_active               Boolean        @default(true)
   password                Password?
   validation              Validation?
+  otp                     OTP?
   session                 Session[]
   status                  Status         @relation(fields: [status_id], references: [id])
   role                    Role           @relation(fields: [role_id], references: [id])
@@ -62,7 +62,7 @@ model Role {
   id                      Int               @id @default(autoincrement())
   name                    String            @unique
   //notification Notification[]
-  //permissions  PermissionInRole[]
+  permissions  PermissionInRole[]
   user                    User[]
 
   @@map("roles")
@@ -76,4 +76,35 @@ model Validation {
   user                    User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("validations")
+}
+
+model Permission {
+  id                      Int                @id @default(autoincrement())
+  name                    String             @unique
+  description             String?
+  action                  String
+  roles                   PermissionInRole[]
+
+  @@map("permissions")
+}
+
+model PermissionInRole {
+  permission_id           Int
+  role_id                 Int
+  permission              Permission          @relation(fields: [permission_id], references: [id])
+  role                    Role                @relation(fields: [role_id], references: [id])
+
+  @@id([permission_id, role_id])
+  @@map("permissions_in_roles")
+}
+
+model OTP {
+  id                      Int                 @id @default(autoincrement())
+  code                    String              @unique
+  user_id                 String              @unique
+  created_at              DateTime            @default(now())
+  updated_at              DateTime?
+  user                    User                @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("otp")
 }

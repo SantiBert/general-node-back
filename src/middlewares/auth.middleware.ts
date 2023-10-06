@@ -17,12 +17,8 @@ const authMiddleware =
   ): Promise<void> => {
     const session = new SessionService();
     try {
-      const authorization =
-        req.cookies['Authorization'] ||
-        (req.header('Authorization')
-          ? req.header('Authorization').split('Bearer ')[1]
-          : null);
-
+      const authorization = req.header('Authorization') ? req.header('Authorization').split('Bearer ')[1]: null;
+      
       if (publicRoute && !authorization) {
         req.user = null;
         return next();
