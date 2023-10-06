@@ -26,6 +26,10 @@ const generateConfig = (): Config => {
       session_expiry: Number(getEnvVar('SESSION_EXPIRY')),
       refresh_token_secret: getEnvVar('REFRESH_TOKEN_SECRET'),
       refresh_token_expiry: Number(getEnvVar('REFRESH_TOKEN_EXPIRY'))
+    },
+    otp: {
+      length: Number(getEnvVar('OTP_LEN')),
+      expiry: Number(getEnvVar('OTP_EXPIRY'))
     }
   };
   if (missingKeys.length) {

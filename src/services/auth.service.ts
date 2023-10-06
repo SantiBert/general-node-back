@@ -1,7 +1,7 @@
 import {compare, hash} from 'bcrypt';
 import {sign} from 'jsonwebtoken';
 import {getRandomInt} from '@/utils/math';
-import {DataStoredInToken, TokenData} from '@/interfaces/authInterface';
+import {DataStoredInToken, TokenData} from '@/interfaces/auth.interface';
 import config from '@/config';
 
 const JWT_SECRET = config.token.jwt_secret;
