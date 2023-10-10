@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=local nodemon src/index.ts",
     "build": "tsc",
     "lint": "eslint --fix src test",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=local jest",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],
